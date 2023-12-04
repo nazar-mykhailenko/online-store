@@ -1,0 +1,52 @@
+﻿@using HouseholdOnlineStore.Models.ViewModels;
+@model Product
+
+<h1 class="my-lg-5">Delete Product</h1>
+
+<form method="post" enctype="multipart/form-data">
+	<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	<h3>Main Info</h3>
+	<input type="hidden" asp-for="Id" />
+	<div class="form-group">
+		<label asp-for="Name" class="control-label"></label>
+		<input disabled asp-for="Name" class="form-control"/>
+		<span asp-validation-for="Name" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label asp-for="Description" class="control-label"></label>
+		<input disabled asp-for="Description" class="form-control" />
+		<span asp-validation-for="Description" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label asp-for="Left" class="control-label"></label>
+		<input disabled asp-for="Left" class="form-control" />
+		<span asp-validation-for="Left" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label asp-for="Manufacturer" class="control-label"></label>
+		<input disabled asp-for="Manufacturer" class="form-control" />
+		<span asp-validation-for="Manufacturer" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label asp-for="Price" class="control-label"></label>
+		<input disabled asp-for="Price" class="form-control" />
+		<span asp-validation-for="Price" class="text-danger"></span>
+	</div>
+	<div class="form-group">
+		<label asp-for="Image" class="control-label"></label>
+		<input disabled asp-for="Image" class="form-control" />
+		<span asp-validation-for="Image" class="text-danger"></span>
+	</div>
+	<h3 class="mt-lg-5">Characteristics</h3>
+	<div class="form-group" id="item-list">
+		@for (int i = 0; i < Model.Characterictics.Count; i++)
+		{
+			<hr />
+			<label >Name</label>
+			<input disabled type="text" asp-for="Characterictics" value=@Model.Characterictics.ElementAt(i).Name class="items form-control" name=@("Characterictics["+i+"].Name") />
+		<label>Value</label>
+			<input disabled type="text" asp-for="Characterictics" value=@Model.Characterictics.ElementAt(i).Value class="items form-control" name=@("Characterictics["+i+"].Value") />
+		}
+	</div>
+	<input type="submit" value="Delete" class="btn btn-primary" />
+</form>

@@ -1,0 +1,66 @@
+﻿@using HouseholdOnlineStore.Models.ViewModels;
+@model List<CartVM>
+
+<h1 class="my-lg-5">Your cart</h1>
+
+<form>
+	<h3 class="float-end">Total price: @ViewBag.Price</h3>
+<table class="table table-striped">
+	<thead>
+		<tr>
+		<th>
+			Image
+		</th>
+		<th>
+			Name
+		</th>
+		<th>
+			Price
+		</th>
+		<th>
+			Quantity
+		</th>
+		<th>
+			Total price
+		</th>
+		</tr>
+	</thead>
+	<tbody>
+		@for(int i = 0; i < Model.Count; i++)
+		{
+				<input type="hidden" value=@Model[i].Product.Id name=@($"cart[{i}].Product.Id ") />
+				<input type="hidden" value=@Model[i].Product.Name name=@($"cart[{i}].Product.Name") />
+				<input type="hidden" value=@Model[i].Product.Description name=@($"cart[{i}].Product.Description") />
+				<input type="hidden" value=@Model[i].Product.Manufacturer name=@($"cart[{i}].Product.Manufacturer") />
+				<input type="hidden" value=@Model[i].Product.Image name=@($"cart[{i}].Product.Image") />
+				<input type="hidden" value=@Model[i].Product.Left name=@($"cart[{i}].Product.Left") />
+				<input type="hidden" value=@Model[i].Product.Price name=@($"cart[{i}].Product.Price") />
+			<tr>
+				<td>
+					<img src="@Model[i].Product.Image" width="75" height="50">
+				</td>
+				<td>
+					<a asp-controller="Product" asp-action="Details" asp-route-id="@Model[i].Product.Id">@Model[i].Product.Name</a>
+				</td>
+				<td>
+					@Model[i].Product.Price
+				</td>
+				<td width="15%">
+						<input type="number" min="1" max=@Model[i].Product.Left name=@($"cart[{i}].Quantity") value="@Model[i].Quantity" class="form-control">
+				</td>
+				<td>
+					@(Model[i].Product.Price * Model[i].Quantity)
+				</td>
+				<td>
+					<a asp-controller="Cart" asp-action="RemoveFromCart" asp-route-productId="@Model[i].Product.Id" class="btn btn-danger">Remove</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+@if(Model.Count > 0)
+{
+	<input asp-controller="Cart" asp-action="Save" type="submit" class="btn btn-secondary" value="Save changes" />
+	<input asp-controller="Order" asp-action="Create" type="submit" class="btn btn-secondary float-end" value="Make order" />
+}
+</form>

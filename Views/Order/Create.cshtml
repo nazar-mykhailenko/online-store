@@ -1,0 +1,88 @@
+﻿@using HouseholdOnlineStore.Models.ViewModels;
+@using System.Security.Claims;
+@model List<ProductsQuantityVM>
+
+<h1 class="my-lg-5">Your order</h1>
+
+
+<form method="post">
+	<h3 class="float-end">Total price: @ViewBag.Price</h3>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Image</th>
+				<th>Name</th>
+				<th>Price</th>
+				<th>Quantity</th>
+				<th>Total price</th>
+			</tr>
+		</thead>
+		<tbody>
+			@for (int i = 0; i < Model.Count; i++)
+			{
+				<input type="hidden" value=@Model[i].Prod.Id name=@($"order.Products[{i}].ProdId ") />
+				<input type="hidden" value=@Model[i].Quantity name=@($"order.Products[{i}].Quantity") value="@Model[i].Quantity" class="form-control">
+				<input type="hidden" value=@Model[i].Prod.Price name=@($"order.Products[{i}].Price ") />
+
+				<tr>
+					<td>
+						<img src="@Model[i].Prod.Image" width="75" height="50">
+					</td>
+					<td>
+						<a asp-controller="Product" asp-action="Details" asp-route-id="@Model[i].Prod.Id">@Model[i].Prod.Name</a>
+					</td>
+					<td>
+						@Model[i].Prod.Price
+					</td>
+					<td width="15%">
+						@Model[i].Quantity
+					</td>
+					<td>
+						@(Model[i].Prod.Price * Model[i].Quantity)
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+
+	<h1 class="my-lg-3">
+		Enter your data
+	</h1>
+	<div class="text-danger" asp-validation-summary="All"></div>
+	<div class="form-group">
+		<label for="order.Name" class="control-label">Name</label>
+		<input name="order.Name" value="@User.FindFirst(c => c.Type == ClaimTypes.Name)?.Value" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label for="order.Surname" class="control-label">Surname</label>
+		<input name="order.Surname" value="@User.FindFirst(c => c.Type == ClaimTypes.Surname)?.Value" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label for="order.PhoneNumber" class="control-label">Phone Number</label>
+		<input type="number" min="" name="order.PhoneNumber" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label for="order.Address" class="control-label">Address</label>
+		<input name="order.Address" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label for="order.DeliveryType" class="control-label">Delivery Type</label>
+		<select name="order.DeliveryType" class="form-select">
+			<option value="Укрпошта">Укрпошта</option>
+			<option value="Нова пошта">Нова пошта</option>
+			<option value="Meest">Meest</option>
+		</select>
+	</div>
+	<div class="form-group">
+		<label for="order.PaymentType" class="control-label">Payment Type</label>
+		<select name="order.PaymentType" class="form-select">
+			<option value="Credit card">Credit card</option>
+			<option value="Cash">Cash</option>
+		</select>
+	</div>
+	<input type="hidden" name="order.Status" value="@OrderStatus.New" />
+	<input type="hidden" name="order.AppUserId" value="@User.FindFirst("Id").Value" />
+	<input type="hidden" name="order.OrderDateTime" value="@DateTime.Now" />
+
+	<input type="submit" value="Create order" class="btn btn-primary mt-3" />
+</form>

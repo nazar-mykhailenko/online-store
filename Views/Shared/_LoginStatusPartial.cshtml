@@ -1,0 +1,29 @@
+﻿@if(User.Identity.IsAuthenticated)
+{
+	<div class="d-sm-inline-flex justify-content-between">
+		<div class="mx-3">
+			<ul class="navbar-nav me-auto">
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Menu</a>
+				<div class="dropdown-menu">
+					<a asp-controller="User" asp-action="Settings" asp-route-id="@User.FindFirst("Id")?.Value" class="dropdown-item">Settings</a>
+					<a asp-action="Index" asp-controller="Order" class="dropdown-item">My orders</a>
+					@if(User.IsInRole("Admin"))
+						{
+							<a class="dropdown-item" asp-controller="User" asp-action="Control">Control panel</a>
+						}				
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" asp-controller="User" asp-action="Logout">Log out</a>
+				</div>
+			</li>
+			</ul>
+		</div>
+	</div>
+}
+else
+{
+	<div class=" mx-3">
+	<a class="nav-link" asp-controller="User" asp-action="Login">Login</a>
+	<a class="nav-link" asp-controller="User" asp-action="Register">Register</a>
+	</div>
+}

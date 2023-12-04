@@ -1,0 +1,47 @@
+﻿@model Product
+
+<div class="container">
+
+    <h1 class="my-4">@Model.Name
+      <small>@Model.Manufacturer</small>
+    </h1>
+  
+    <div class="row">
+  
+      <div class="col-md-8">
+        <img class="img-fluid" src="@Model.Image" alt="">
+      </div>
+
+		<div class="col-md-4">
+			<h3 class="my-3">Description</h3>
+            <p style="overflow-wrap: break-word;">@Model.Description</p>
+        <ul>
+          <li><h5>Left: @Model.Left</h5></li>
+          <li><h5>Price: @Model.Price</h5></li>
+        </ul>
+            <form asp-controller="Cart" asp-action="AddToCart" class="col-xs-2 d-flex justify-content-between align-items-center mt-2" method="get">
+                <input type="hidden" value="@Model.Id" name="productId">
+                <input type="number" value="0" min="1" max="@Model.Left" name="quantity" class="form-control">
+                <input type="submit" value="Buy" class="btn btn-outline-secondary">
+            </form>
+      </div>
+    </div>
+</div>
+<div class="container my-lg-5">
+    <h2>Characterictics</h2>
+    <table class="table">
+        <tbody>
+        @foreach(var item in Model.Characterictics)
+        {
+            <tr>
+           <td >
+               @item.Name
+           </td>
+           <td>
+               @item.Value
+           </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

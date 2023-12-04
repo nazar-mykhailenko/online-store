@@ -1,0 +1,38 @@
+﻿@using HouseholdOnlineStore.Models.ViewModels
+@model LoginModel
+
+<div class="container border" style="padding:20px;">
+	<form method="post">
+		<div class="row" style="padding:10px">
+			<div class="col-1">
+				<label asp-for="Email"></label>
+			</div>
+			<div class="col-5">
+				<input type="text" asp-for="Email" class="form-control" />
+			</div>
+			<span asp-validation-for="Email" class="text-danger"></span>
+		</div>
+		<div class="row" style="padding:10px">
+			<div class="col-1">
+				<label asp-for="Password"></label>
+			</div>
+			<div class="col-5">
+				<input type="password" asp-for="Password" class="form-control" />
+			</div>
+			<span asp-validation-for="Password" class="text-danger"></span>
+		</div>
+		<div class="row" style="padding:10px">
+			<div class="col-1">
+				<label asp-for="RememberMe"></label>
+			</div>
+			<div class="col-1">
+				<input type="checkbox" asp-for="RememberMe" />
+			</div>
+		</div>
+		<div class="row" style="padding:10px">
+			<div class="col-1">
+				<input type="submit" class="btn btn-primary" value="Login" />
+			</div>
+		</div>
+	</form>
+</div>

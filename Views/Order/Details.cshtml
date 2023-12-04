@@ -1,0 +1,88 @@
+﻿@using HouseholdOnlineStore.Models.ViewModels;
+@model OrderVM
+
+<h1 class="my-lg-5">
+	Your order
+</h1>
+
+<a asp-action="GenerateInvoice" asp-controller="Order" asp-route-id="@Model.Id" class="btn btn-primary float-end">Download invoice</a>
+<div class="my-3">
+<label asp-for="Status" class="control-label"></label>
+<input disabled asp-for="Status" class="form-control" />
+<label asp-for="OrderDateTime" class="control-label"></label>
+<input disabled asp-for="OrderDateTime" class="form-control" />
+</div>
+<h3 class="float-end">Total price: @ViewBag.Price</h3>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>
+					Image
+				</th>
+				<th>
+					Name
+				</th>
+				<th>
+					Price
+				</th>
+				<th>
+					Quantity
+				</th>
+				<th>
+					Total price
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@for (int i = 0; i < Model.Products.Count; i++)
+			{
+				<tr>
+					<td>
+						<img src="@Model.Products.ElementAt(i).Prod.Image" width="75" height="50">
+					</td>
+					<td>
+						<a asp-controller="Product" asp-action="Details" asp-route-id="@Model.Products.ElementAt(i).Prod.Id">@Model.Products.ElementAt(i).Prod.Name</a>
+					</td>
+					<td>
+						@Model.Products.ElementAt(i).Prod.Price
+					</td>
+					<td width="15%">
+						@Model.Products.ElementAt(i).Quantity
+					</td>
+					<td>
+						@(Model.Products.ElementAt(i).Prod.Price * Model.Products.ElementAt(i).Quantity)
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+
+	<h1 class="my-lg-3">
+		Your data
+	</h1>
+
+	<div class="form-group">
+		<label asp-for="Name" class="control-label"></label>
+	<input disabled asp-for="Name" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label asp-for="Surname" class="control-label"></label>
+	<input disabled asp-for="Surname" class="form-control" />
+	</div>
+<div class="form-group">
+	<label asp-for="PhoneNumber" class="control-label"></label>
+	<input disabled asp-for="PhoneNumber" class="form-control" />
+</div>
+	<div class="form-group">
+		<label asp-for="Address" class="control-label"></label>
+	<input disabled asp-for="Address" class="form-control" />
+	</div>
+	<div class="form-group">
+		<label asp-for="DeliveryType" class="control-label"></label>
+	<input disabled asp-for="DeliveryType" class="form-control">
+	</div>
+	<div class="form-group">
+	<label asp-for="PaymentType" class="control-label"></label>
+	<input disabled asp-for="PaymentType" class="form-control">
+	</div>
+	

@@ -1,0 +1,121 @@
+﻿@model IEnumerable<Order>
+
+<form class="my-3" asp-action="List" asp-controller="Order" method="get">
+
+		<div class="d-flex justify-content-between align-items-center my-3">
+			<div class="form-group">
+				<label for="filters.MinDate">Min date</label>
+			<input type="date" class="form-control" name="filters.MinDate" />
+			</div>
+			<div class="form-group">
+				<label for="filters.MaxDate">Max Date</label>
+			<input type="date" class="form-control" name="filters.MaxDate" />
+			</div>
+			<div class="form-group">
+				<label for="filters.DeliveryType" class="control-label">Delivery Type</label>
+				<select name="filters.DeliveryType" class="form-select">
+				<option value="">None</option>
+					<option value="Укрпошта">Укрпошта</option>
+					<option value="Нова пошта">Нова пошта</option>
+					<option value="Meest">Meest</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="filters.PaymentType" class="control-label">Payment Type</label>
+				<select name="filters.PaymentType" class="form-select">
+				<option value="">None</option>
+					<option value="Credit card">Credit card</option>
+					<option value="Cash">Cash</option>
+				</select>
+			</div>
+		</div>
+		<div class="d-flex justify-content-between align-items-center my-3">
+			<div class="form-group">
+				<label for="filters.Status">Status</label>
+			<select name="filters.Status" class="form-select">
+				<option value="">None</option>
+					@foreach (var a in Enum.GetValues<OrderStatus>().Zip(Enum.GetNames(typeof(OrderStatus)), (v, n) => new { Name = n, Value = v }))
+					{
+							<option value="@a.Value">@a.Name</option>
+					}
+				</select>
+			</div>
+			<div class="form-group">
+				<label for="filters.Name">Name</label>
+				<input type="text" class="form-control mx-2" name="filters.Name" />
+			</div>
+			<div class="form-group">
+				<label for="filters.Surname">Surname</label>
+				<input type="text" class="form-control mx-2" name="filters.Surname" />
+			</div>
+			<div class="form-group">
+				<label for="filters.PhoneNumber">Phone Number</label>
+				<input type="text" class="form-control mx-2" name="filters.PhoneNumber" />
+			</div>
+		</div>
+	<input class="btn btn-primary mx-auto" value="Filter" type="submit">
+</form>
+
+
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				Id
+			</th>
+			<th>
+				Order Number
+			</th>
+			<th>
+				Status
+			</th>
+			<th>
+				OrderDate
+			</th>
+			<th>
+				Client credentials
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<form asp-action="Update" asp-controller="Order">
+			<tr>
+				<td>
+					<input type="hidden" value="@item.Id" name="id" />
+					@item.Id
+				</td>
+				<td>
+					<input type="number" value="@item.OrderNumber" name="orderNumber" class="form-control" />
+				</td>
+				<td>
+					<select name="orderStatus" class="form-select">
+						@foreach (var a in Enum.GetValues<OrderStatus>().Zip(Enum.GetNames(typeof(OrderStatus)), (v, n) => new { Name = n, Value = v }))
+						{
+							if(a.Value == item.Status)
+							{
+								<option selected value="@a.Value">@a.Name</option>
+							}
+							else
+							{
+								<option value="@a.Value">@a.Name</option>
+							}
+						}
+					</select>
+				</td>
+				<td>
+					@item.OrderDateTime
+				</td>
+				<td>
+					@($"{item.Name} {item.Surname}, {item.PhoneNumber}")
+				</td>
+				<td>
+					<input type="submit" value="Update" class="btn btn-secondary" />
+				</td>
+			</tr>
+			</form>
+		}
+	</tbody>
+</table>

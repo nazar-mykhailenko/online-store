@@ -1,0 +1,50 @@
+﻿@model List<Order>
+
+<h1 class="my-lg-5">
+	Your orders
+</h1>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				Order number
+			</th>
+			<th>
+				Delivery Number
+			</th>
+			<th>
+				Status
+			</th>
+			<th>
+				OrderDate
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<th>
+					@item.Id
+				</th>
+				<td>
+					@item.OrderNumber
+				</td>
+				<td>
+					@item.Status.ToString()
+				</td>
+				<td>
+					@item.OrderDateTime
+				</td>
+				<td>
+					<a asp-action="Details" asp-controller="Order" asp-route-id="@item.Id" class="btn btn-secondary">Details</a>
+					@if(item.Status == OrderStatus.New)
+					{
+						<a asp-action="Cancel" asp-controller="Order" asp-route-id="@item.Id" class="btn btn-secondary">Cancel</a>
+					}
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

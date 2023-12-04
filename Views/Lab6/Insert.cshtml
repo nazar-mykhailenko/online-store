@@ -1,0 +1,44 @@
+﻿<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>
+				Action
+			</th>
+			<th>
+				Sync
+			</th>
+			<th>
+				Async
+			</th>
+			<th>
+				Parallel
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Select 20 rows</td>
+			<td>@ViewBag.SelectSync20</td>
+			<td>@ViewBag.SelectAsync20</td>
+			<td>@ViewBag.SelectParallel20</td>
+		</tr>
+		<tr>
+			<td>Select 100000 rows</td>
+			<td>@ViewBag.SelectSync100000</td>
+			<td>@ViewBag.SelectAsync100000</td>
+			<td>@ViewBag.SelectParallel100000</td>
+		</tr>
+		<tr>
+			<td>Add 20 rows</td>
+			<td>@ViewBag.Sync20</td>
+			<td>@ViewBag.Async20</td>
+			<td>@ViewBag.Parallel20</td>
+		</tr>
+		<tr>
+			<td>Add 100000 rows</td>
+			<td>@ViewBag.Sync100000</td>
+			<td>@ViewBag.Async100000</td>
+			<td>@ViewBag.Parallel100000</td>
+		</tr>
+	</tbody>
+</table>
